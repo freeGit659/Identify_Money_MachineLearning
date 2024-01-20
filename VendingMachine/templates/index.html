@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vending Machine</title>
+</head>
+<body>
+
+<div style="float: left; width: 50%;">
+    <h2>Menu</h2>
+    <table border="1">
+        <tr>
+            <p>Danh sách đồ uống</p>
+        </tr>
+        {% for drink in drinks %}
+                <th>{{ drink['name'] }}
+                    <tr>
+                        <td><img src="{{ url_for('static', filename='images/' + drink['image']) }}" alt="{{ drink['name'] }}" height="50"></td>
+                    </tr>
+                    <tr>
+                        <td>{{ drink['price']}} Nghìn VNĐ</td>
+                    </tr>
+                    <tr>
+                        <td><a href="{{ url_for('add_to_cart', drink_index=loop.index0) }}">Add to Cart</a></td>
+                    </tr>
+                </th>
+
+    {% endfor %}
+    </table>
+</div>
+
+<div style="float: right; width: 50%;">
+    <h2>Cart</h2>
+    <table border="1">
+        <tr>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total Price</th>
+            <th>Action</th>
+        </tr>
+    </table>
+
+</div>
+
+</body>
+</html>
