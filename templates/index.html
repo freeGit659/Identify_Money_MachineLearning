@@ -83,20 +83,28 @@
             transform: translateY(2px);
         }
         .information{
-            text-align: center;
+            display: flex;
+        }
+
+        .logo{
+
         }
     </style>
 </head>
 
 <body>
-    <div class = "information">
-        <img src="/static/images/TDTU_logo.png" alt="TDTU_Logo" height="150">
-        <h1>Trường đại học Tôn Đức Thắng</h1>
-        <h2>Khoa Điện - Điện tử</h2>
-        <h2>Ngành Kỹ thuật điều khiển và Tự động hoá</h2>
-        <h1>ĐỒ ÁN TỔNG HỢP</h1>
-        <p>Vũ Tiến Thành - 41801237</p>
-        <p>Giảng viên hướng dẫn: TS. Nguyễn Thị Phương Thảo</p>
+    <div class = "information"> 
+        <div style="float: left; width: 20%;">
+            <img class="logo" src="/static/images/TDTU_logo.png" alt="TDTU_Logo" height="150" width="250" style="position: relative; left: 300px;">
+        </div>
+        <div style="float: right; width: 80%; text-align: center; position: relative; right: 300px;">
+            <h1>Trường đại học Tôn Đức Thắng</h1>
+            <h2>Khoa Điện - Điện tử</h2>
+            <h2>Ngành Kỹ thuật điều khiển và Tự động hoá</h2>
+            <h1>ĐỒ ÁN TỔNG HỢP</h1>
+            <p>Vũ Tiến Thành - 41801237</p>
+            <p>Giảng viên hướng dẫn: TS. Nguyễn Thị Phương Thảo</p>
+        </div>
     </div>
     <div style="float: left; width: 50%;">
         <h2 style="text-align: center">Menu</h2>

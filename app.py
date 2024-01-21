@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 # Danh sách các loại đồ uống
 drinks = [
-    {"id": 1, "name": "Coca Cola", "image": "cola.jpg", "price": 10, 'quantity': 1},
+    {"id": 1, "name": "Coca Cola", "image": "cola.jpg", "price": 10, 'quantity': 0},
     {"id": 2, "name": "Pepsi", "image": "pepsi.jpg", "price": 13, 'quantity': 0},
     {"id": 3, "name": "Water", "image": "water.jpg", "price": 5, 'quantity': 0},
     {"id": 4, "name": "Aqua", "image": "water.jpg", "price": 9, 'quantity': 0},
@@ -26,7 +26,7 @@ def add_to_cart(drink_index):
     global total
     drink = drinks[drink_index]
     drink['quantity'] += 1
-    total += drink['quantity'] * drink['price']
+    total += drink['price']
     for item in cart:
         if item['id'] == drink['id']:
             item['quantity'] = drink['quantity']
@@ -37,10 +37,16 @@ def add_to_cart(drink_index):
 
 @app.route('/remove_from_cart/<int:cart_index>')
 def remove_from_cart(cart_index):
+    global total
+    cartRemove = cart[cart_index]
+    total =total-cartRemove['quantity']*cartRemove['price']
+    print(cartRemove)
+    print(total)
     for drink in drinks:
         if drink['id'] == cart[cart_index]['id']:
             drink['quantity'] = 0
     del cart[cart_index]
+
     return redirect(url_for('index'))
 
 
