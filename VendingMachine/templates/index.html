@@ -1,48 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vending Machine</title>
+    <style>
+        td {
+            text-align: center;
+        }
+
+        .high_light{
+            background-color: rgba(209, 204, 204, 0.8);
+        }
+
+        .payment{
+            display: flex;
+            margin-left: 5%;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: auto auto;
+            background-color: #2196F3;
+            padding: 10px;
+            margin-left: 20%;
+            margin-right: 20%;
+        }
+
+        .grid-item {
+            display: flex;
+            justify-content: center;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            font-size: 30px;
+            text-align: center;
+        }
+
+        .button-29 {
+            align-items: center;
+            appearance: none;
+            background-image: radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%);
+            border: 0;
+            border-radius: 6px;
+            box-shadow: rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, rgba(58, 65, 111, .5) 0 -3px 0 inset;
+            box-sizing: border-box;
+            color: #fff;
+            cursor: pointer;
+            display: inline-flex;
+            font-family: "JetBrains Mono", monospace;
+            height: 48px;
+            justify-content: center;
+            line-height: 1;
+            list-style: none;
+            overflow: hidden;
+            padding-left: 16px;
+            padding-right: 16px;
+            position: relative;
+            text-align: left;
+            text-decoration: none;
+            transition: box-shadow .15s, transform .15s;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            white-space: nowrap;
+            will-change: box-shadow, transform;
+            font-size: 18px;
+        }
+
+        .button-29:focus {
+            box-shadow: #3c4fe0 0 0 0 1.5px inset, rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+        }
+
+        .button-29:hover {
+            box-shadow: rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+            transform: translateY(-2px);
+        }
+
+        .button-29:active {
+            box-shadow: #3c4fe0 0 3px 7px inset;
+            transform: translateY(2px);
+        }
+        .information{
+            text-align: center;
+        }
+    </style>
 </head>
+
 <body>
+    <div class = "information">
+        <img src="/static/images/TDTU_logo.png" alt="TDTU_Logo" height="150">
+        <h1>Trường đại học Tôn Đức Thắng</h1>
+        <h2>Khoa Điện - Điện tử</h2>
+        <h2>Ngành Kỹ thuật điều khiển và Tự động hoá</h2>
+        <h1>ĐỒ ÁN TỔNG HỢP</h1>
+        <p>Vũ Tiến Thành - 41801237</p>
+        <p>Giảng viên hướng dẫn: TS. Nguyễn Thị Phương Thảo</p>
+    </div>
+    <div style="float: left; width: 50%;">
+        <h2 style="text-align: center">Menu</h2>
+        <div class="grid-container">
+            {% for drink in drinks %}
+            <div class="grid-item">
+                <a href="{{ url_for('add_to_cart', drink_index=loop.index0) }}">
+                    <table>
+                        <th>{{ drink['name'] }}
+                            <tr>
+                                <td><img src="{{ url_for('static', filename='images/' + drink['image']) }}"
+                                        alt="{{ drink['name'] }}" height="100"></td>
+                            </tr>
+                            <tr>
+                                <td>{{ drink['price']}}.000 VNĐ</td>
+                            </tr>
+                        </th>
+                    </table>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
 
-<div style="float: left; width: 50%;">
-    <h2>Menu</h2>
-    <table border="1">
-        <tr>
-            <p>Danh sách đồ uống</p>
-        </tr>
-        {% for drink in drinks %}
-                <th>{{ drink['name'] }}
-                    <tr>
-                        <td><img src="{{ url_for('static', filename='images/' + drink['image']) }}" alt="{{ drink['name'] }}" height="50"></td>
-                    </tr>
-                    <tr>
-                        <td>{{ drink['price']}} Nghìn VNĐ</td>
-                    </tr>
-                    <tr>
-                        <td><a href="{{ url_for('add_to_cart', drink_index=loop.index0) }}">Add to Cart</a></td>
-                    </tr>
-                </th>
-
-    {% endfor %}
-    </table>
-</div>
-
-<div style="float: right; width: 50%;">
-    <h2>Cart</h2>
-    <table border="1">
-        <tr>
-            <th>Name</th>
-            <th>Quantity</th>
-            <th>Price</th>
-            <th>Total Price</th>
-            <th>Action</th>
-        </tr>
-    </table>
-
-</div>
+    <div style="float: right; width: 50%;">
+        <h2>Giỏ hàng</h2>
+        <table>
+            <th>Tên</th>
+            <th>Số lượng</th>
+            <th>Thành tiền</th>
+            {% for item in cart %}
+            <tr>
+                <td>{{item['name']}}</td>
+                <td>{{item['quantity']}}</td>
+                <td>{{item['quantity']*item['price']}}.000 VNĐ</td>
+                <td><button class="button-delete" onclick="location.href='{{ url_for('remove_from_cart', cart_index=loop.index0) }}'" role="button" ><img src="/static/images/delete.png" border="0" height="30" /></button></td>
+            </tr>
+            {% endfor %}
+            <tr class="high_light">
+                <td>Tổng cộng: </td>
+                <td></td>
+                <td>{{total}}.000 VNĐ</td>
+            </tr>
+        </table>
+        <div class="payment">
+            <button class="button-29" role="button">THANH TOÁN</button>
+        </div>
+    </div>
 
 </body>
+
 </html>
